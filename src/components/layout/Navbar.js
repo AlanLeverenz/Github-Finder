@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export class Navbar extends Component {
-  // set default in case none provided
-  static defaultProps = {
-    title: 'Github Finder',
-    icon: 'fab fa-github',
-  };
-  // static constructor
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-  };
+const Navbar = (props) => {
+  return (
+    <nav className='navbar bg-primary'>
+      <h1>
+        <i className={props.icon}></i> {props.title}
+      </h1>
+    </nav>
+  );
+};
 
-  render() {
-    return (
-      <nav className='navbar bg-primary'>
-        <h1>
-          <i className={this.props.icon}></i> {this.props.title}
-        </h1>
-      </nav>
-    );
-  }
-}
+// do not need 'static' for functional components
+Navbar.defaultProps = {
+  title: 'Github Finder',
+  icon: 'fab fa-github',
+};
+// static constructor
+Navbar.propTypes = {
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+};
+
 // only need export statement once
 export default Navbar;
