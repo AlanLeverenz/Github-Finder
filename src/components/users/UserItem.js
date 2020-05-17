@@ -1,10 +1,7 @@
 import React from 'react';
 
 // functional component
-const UserItem = (props) => {
-  // destructuring the state
-  const { login, avatar_url, html_url } = props.user;
-
+const UserItem = ({ user: { login, avatar_url, html_url } }) => {
   return (
     <div className='card text-center'>
       <img
