@@ -14,7 +14,7 @@ class App extends Component {
   async componentDidMount() {
     this.setState({ loading: true });
     const res = await axios.get(
-      `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
     );
     this.setState({ users: res.data, loading: false });
     console.log(res);
@@ -22,15 +22,23 @@ class App extends Component {
 
   // search github users
   searchUsers = async (text) => {
-    this.setState({ loading: true });
+    try {
+      this.setState({ loading: true });
 
-    const res = await axios.get(
-      `https://api.github.com/search/users?q={text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-    this.setState({ users: res.data.items, loading: false });
+      const res = await axios.get(
+        `https://api.github.com/search/users?q={text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      );
 
-    console.log(res.data);
-    console.log(text);
+      this.setState({ users: res.data.items, loading: false });
+
+      // testing why no result
+      console.log(`secret: ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+      console.log(`total: ${res.data.total_count}`);
+      console.log(`incomplete: ${res.data.incomplete_results}`);
+      console.log(text);
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   render() {
